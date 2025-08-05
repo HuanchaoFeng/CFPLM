@@ -1,4 +1,3 @@
-#torch是PyTorch的主要库，torch.nn提供了神经网络模块，torch_geometric.nn提供了图神经网络的模块
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -35,13 +34,10 @@ class CrossAttention(nn.Module):
         super().__init__()
         self.num_heads = num_heads
         self.head_dim = head_dim
-
-        # 调整维度为head_dim*num_heads
         self.proj_q1 = nn.Linear(in_dim1, head_dim * num_heads)
         self.proj_k2 = nn.Linear(in_dim2, head_dim * num_heads)
         self.proj_v2 = nn.Linear(in_dim2, head_dim * num_heads)
 
-        # 添加LayerNorm和Dropout
         self.norm = nn.LayerNorm(in_dim1)
         self.dropout = nn.Dropout(0.1)
         self.out_proj = nn.Linear(head_dim * num_heads, in_dim1)
@@ -51,20 +47,19 @@ class CrossAttention(nn.Module):
 
         batch_size = x1.size(0)
 
-        # 投影并分头
         q = self.proj_q1(x1).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
         k = self.proj_k2(x2).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
         v = self.proj_v2(x2).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
 
-        # 缩放点积注意力
+   
         attn = (q @ k.transpose(-2, -1)) * (self.head_dim ** -0.5)
-        attn = F.softmax(attn, dim=-1) #对注意力分数矩阵应用 Softmax 函数，使其每一行的和为 1，得到归一化的注意力权重
-        attn = self.dropout(attn) #随机丢弃一部分权重，防止过拟合
+        attn = F.softmax(attn, dim=-1) 
+        attn = self.dropout(attn) 
 
-        # 合并多头,注意力权重与 Value 相乘，得到加权的特征表示
+    
         output = (attn @ v).transpose(1, 2).contiguous().view(batch_size, -1, self.num_heads * self.head_dim)
-        output = self.out_proj(output)#将多头注意力的输出通过线性变换层 out_proj，将维度从 num_heads * head_dim 映射回原始维度 in_dim1
-        # 残差相加，然后归一化
+        output = self.out_proj(output)
+       
         return self.norm(residual + output)
 
 class CFPLM_Model(nn.Module):
@@ -128,7 +123,7 @@ class CFPLM_Model(nn.Module):
         protein_vec_gcn = protein_vec_gcn.unsqueeze(0)
         rna_vec_gcn = rna_vec_gcn.unsqueeze(0)
         rna_attention_inter = self.cross_attn1(rna_int_vec_gcn, protein_int_vec_gcn)
-        protein_attention_inter = self.cross_attn1(protein_int_vec_gcn, rna_int_vec_gcn)  # 反向输入
+        protein_attention_inter = self.cross_attn1(protein_int_vec_gcn, rna_int_vec_gcn) 
         rna_attention_coll = self.cross_attn2(rna_vec_gcn, protein_vec_gcn)
         protein_attention_coll = self.cross_attn2(protein_vec_gcn, rna_vec_gcn)
         rna_attention_inter=rna_attention_inter.squeeze(0)
