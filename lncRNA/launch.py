@@ -6,7 +6,7 @@ from torch_geometric.utils import to_undirected
 from control import single_run  
 
 def fold_run(device):
-    seed = 2024  # 2024是我的模型最高的
+    seed = 2024  
     random.seed(seed)
     np.random.seed(seed)
     
