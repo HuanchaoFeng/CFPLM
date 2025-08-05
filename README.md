@@ -3,9 +3,9 @@
 ## Main Model Location
 
 The primary model implementation for this paper is located in:
-`/benchmark/model.py` 
-`/lncRNA/model.py` 
-`/mirna/model.py`
+`/benchmark/CFPLM.py` 
+`/lncRNA/CFPLM.py` 
+`/mirna/CFPLM.py`
 
 ## Environment Setup
 
