@@ -6,7 +6,6 @@ The primary model implementation for this paper is located in:
 `/benchmark/model.py` or
 `/lncRNA/model.py` or
 `/mirna/model.py`
-they are all the same model.
 
 ## Environment Setup
 
