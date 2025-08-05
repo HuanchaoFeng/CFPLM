@@ -20,7 +20,6 @@ class GraphConvolutionNetwork(nn.Module):
 class Adapter(nn.Module):   
     def __init__(self, in_channels,hidden_channel, out_channel):
         super().__init__()
-        #第一个线性层
         self.lin1=nn.Linear(in_channels, hidden_channel)
         self.lin2=nn.Linear(hidden_channel,out_channel)
 
