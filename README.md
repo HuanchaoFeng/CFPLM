@@ -61,4 +61,4 @@ If you need to extract protein or RNA features from your own sequence data (inst
 ## Notes
 
 - Ensure that the required GPU and CUDA version are available to achieve optimal performance.
-- For further details on the model architecture or dataset preprocessing, refer to the associated research paper (to be added upon publication).
+- For further details on the model architecture or dataset preprocessing, refer to the associated research paper.
