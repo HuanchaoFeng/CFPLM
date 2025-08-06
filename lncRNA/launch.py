@@ -10,13 +10,13 @@ def fold_run(device):
     random.seed(seed)
     np.random.seed(seed)
     
-    inter = np.load(f'/data/hcfeng/envs/get_rna/upload_model/lncRNA/interaction.npy')
-    rna_vector = np.load(f'/data/hcfeng/envs/get_rna/upload_model/lncRNA/rna_vector.npy')
-    protein_vector = np.load('/data/hcfeng/envs/get_rna/upload_model/lncRNA/protein_vector.npy')
-    rna_similarity = np.load('/data/hcfeng/envs/get_rna/upload_model/lncRNA/rna_similarity.npz')
+    inter = np.load(f'interaction.npy')
+    rna_vector = np.load(f'rna_vector.npy')
+    protein_vector = np.load('protein_vector.npy')
+    rna_similarity = np.load('rna_similarity.npz')
     rna_index = rna_similarity['edge']
     rna_val = rna_similarity['weight']
-    protein_similarity = np.load(f'/data/hcfeng/envs/get_rna/upload_model/lncRNA/protein_similarity.npz')
+    protein_similarity = np.load(f'protein_similarity.npz')
     protein_index = protein_similarity['edge']
     protein_val = protein_similarity['weight']
 
